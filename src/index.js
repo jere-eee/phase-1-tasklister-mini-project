@@ -6,20 +6,47 @@ document.addEventListener("DOMContentLoaded", () => {
     let li = document.createElement('li')
     let description = document.getElementById("new-task-description").value
     let color = document.getElementById("priority").value
-    // console.log(description)
-    li.textContent = description
     li.style.color = color;
 
     let del = document.createElement('button');
-    del.textContent = "Delete";
+    del.textContent = "X";
     del.addEventListener('click', (e) => {
       li.remove();
       e.target.remove()
     })
     
+    let edit = document.createElement('button');
+    edit.textContent = "Edit";
+    edit.addEventListener('click', (e) => {
+      li.textContent = '';
+      let newInput = document.createElement('input')
+      newInput.type = 'text'
+      newInput.value = description
+      li.appendChild(newInput)
 
+      let newDate = document.createElement('input')
+      newDate.type = 'date';
+      newDate.value = date
+      li.appendChild(newDate)
+
+      let save = document.createElement('button')
+      save.textContent = 'Save'
+      save.addEventListener('click', (e) => {
+        li.textContent = `${newInput.value} Due:${newDate.value}`
+        li.appendChild(edit);
+        li.appendChild(del)
+      })
+      li.appendChild(save)
+      li.appendChild(del);
+    })
+    
+
+    let date = document.querySelector('#date').value
+    li.textContent = ` ${description} Due:${date}`
+
+    li.appendChild(edit)
+    li.appendChild(del)
     document.querySelector('#tasks').appendChild(li);
-    document.querySelector('#tasks').appendChild(del);
     let lists = document.querySelectorAll('#tasks li');
     let tasksArray = Array.from(lists);
 
